@@ -7,13 +7,15 @@ services:
     ports:
       - 80:80
     restart: always
+    env_file:
+      - ./.env
     environment:
-      WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wp-app
-      WORDPRESS_DEBUG: 1
-      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DB_HOST: '${WORDPRESS_DB_HOST}'
+      WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
+      WORDPRESS_DB_PASSWORD: '${WORDPRESS_DB_PASSWORD}'
+      WORDPRESS_DB_NAME: '${WORDPRESS_DB_NAME}'
+      WORDPRESS_DEBUG: '${WORDPRESS_DEBUG}'
+      WORDPRESS_TABLE_PREFIX: '${WORDPRESS_TABLE_PREFIX}'
       WORDPRESS_CONFIG_EXTRA: |
         define('FS_METHOD', 'direct');
         define('SCRIPT_DEBUG', true);
@@ -28,15 +30,17 @@ services:
       - mysql
       - wordpress
     image: wordpress:cli
+    env_file:
+      - ./.env
     entrypoint: wp
     command: "--info"
     environment:
-      WORDPRESS_DB_HOST: mysql:3306
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wp-app
-      WORDPRESS_DEBUG: 1
-      WORDPRESS_TABLE_PREFIX: wp_
+      WORDPRESS_DB_HOST: '${WORDPRESS_DB_HOST}'
+      WORDPRESS_DB_USER: '${WORDPRESS_DB_USER}'
+      WORDPRESS_DB_PASSWORD: '${WORDPRESS_DB_PASSWORD}'
+      WORDPRESS_DB_NAME: '${WORDPRESS_DB_NAME}'
+      WORDPRESS_DEBUG: '${WORDPRESS_DEBUG}'
+      WORDPRESS_TABLE_PREFIX: '${WORDPRESS_TABLE_PREFIX}'
       WORDPRESS_CONFIG_EXTRA: |
         define('FS_METHOD', 'direct');
     volumes:
@@ -50,11 +54,13 @@ services:
     restart: always
     ports:
       - 3306:3306
+    env_file:
+      - ./.env
     volumes:
       - "./.srv/database:/var/lib/mysql"
     environment:
-      MYSQL_ROOT_PASSWORD: wordpress
-      MYSQL_DATABASE: wp-app
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
 
